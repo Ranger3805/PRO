@@ -1,0 +1,8 @@
+{
+"token": "",
+"prefix": "!",
+"ownerid": "459414913505558549",
+"version": "2.5.3",
+  "mongoUrl": "mongodb+srv://root:r00t@seriesdb-wrlac.gcp.mongodb.net/admin?retryWrites=true&w=majority/test_db"
+}
+
