@@ -35,7 +35,7 @@ module.exports= {
       
       let botEmbed = new RichEmbed()
       .setTitle("🎉》 Birthday!")
-      .setDescription(`Its ${args[0]} birthday! He/She is now ${args[1]}, Please wish them a great birhtday in there dms!`)
+      .setDescription(`Its ${args[0]} birthday! He/She is now ${args[1]}, Please wish them a great birthday in their dms!`)
       .setColor(gold);
 
         ch.send(botEmbed)

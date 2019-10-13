@@ -8,7 +8,7 @@ module.exports = {
         category: "server",
         setup: "Permissions Required: Administartion",
         accessableby: "Administrators",
-        aliases: ["r", "rewrite", "re"]
+        aliases: ["rewrite", "re"]
     },
     run: async (bot, message, args) => {
 

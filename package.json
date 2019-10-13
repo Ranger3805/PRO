@@ -1,5 +1,5 @@
 {
-  "name": "Series BOT",
+  "name": "sunbot",
   "version": "1.0.0",
   "description": "This is a tes ",
   "main": "index.js",
@@ -30,10 +30,12 @@
     "weather-js": "^2.0.0",
     "youtube-info": "^1.3.2",
     "yt-search": "^0.4.1",
-    "ytdl-core": "^0.29.7",
+    "ytdl-core": "^1.0.0",
     "ffmpeg": "^0.0.4",
     "express": "^4.16.4",
-    "mongodb": "^3.3.2"
+    "mongodb": "^3.3.2",
+    "discord.js-minesweeper": "^1.0.5",
+    "mathjs": "^6.0.4"
   },
   "engines": {
     "node": "^10.x"

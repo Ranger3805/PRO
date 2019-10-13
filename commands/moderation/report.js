@@ -1,6 +1,6 @@
 const { RichEmbed } = require("discord.js")
 const { red_light } = require("../../colours.json");
-
+const Constants = require("../../util/Constants");
 module.exports = {
 config: {
     name: "report",

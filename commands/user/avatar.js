@@ -1,30 +1,32 @@
-const ms = require('ms')
+const { RichEmbed } = require('discord.js');
 
-const { Discord } = require("discord.js")
-const { RichEmbed } = require("discord.js")
-const { prefix } = require("../../botconfig.json");
-module.exports= {
+module.exports = {
     config: {
         name: "avatar",
-        description: "Grabs the avatar of a user!",
-        usage: " <@user>",
-        category: "fun",
-        accessableby: "Everyone",
-        aliases: ["av","pfp"]
+        description: "Get a member's avatar",
+        usage: "<user>",
+        category: "misc",
+        aliases: ["av"]
     },
-    run: async (bot, message, args) => {
+    run: async (client, message, args) => {
+        if (!args[0]) {
+            let embed = new RichEmbed()
+            .setAuthor(message.author.tag, message.author.avatarURL)
+            .setTitle(`Avatar`)
+            .setColor('#fde3a7')
+            .setImage(message.author.avatarURL);
 
+            message.channel.send(embed);
 
-    var get_message = await message.channel.send("Getting Avatar...");
-    let target = message.mentions.users.first() || msg.author;
+        }
+        let avatarMember = message.mentions.members.first() || message.guild.members.get(args[0]);
 
-    await message.channel.send({
-        files: [{
-            attachment: target.displayAvatarURL,
-            name: "avatar.png"
-        }]
-    });
+        let embed = new RichEmbed()
+        .setAuthor(avatarMember.user.tag, avatarMember.user.avatarURL)
+        .setTitle(`Avatar`)
+        .setColor('#fde3a7')
+        .setImage(avatarMember.user.avatarURL);
 
-    get_message.delete();
-  }
+        message.channel.send(embed);
+    }
 }

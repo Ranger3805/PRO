@@ -15,12 +15,11 @@ const fs = require("fs");
 const { EventEmitter } = require("events");
 
 const { prefix, mongoUrl } = require("./botconfig.json");
-const { bannedServers } = require("./settings.json");
 
 const db = require("./util/db");
 const Constants = require("./util/Constants");
 
-const { giveawayEnd, set } = require("./util/helpers");
+const { set } = require("./util/helpers");
 
 const lastMessages = {};
 
@@ -35,26 +34,6 @@ db(mongoUrl).then(db => {
 ["aliases", "commands"].forEach(x => (bot[x] = new Collection()));
 ["console", "command", "event"].forEach(x => require(`./handlers/${x}`)(bot));
 
-function giveaway() {
-  const db = bot.db.collection("giveaways");
-  db.find({}, (err, result) => {
-    if (err) return console.error(err);
-    result.toArray().then(docs => {
-      docs.forEach(async doc => {
-        const channel = bot.channels.get(doc.channelId);
-        if (!channel)
-          return db.deleteOne({ _id: doc._id }, (err, result) => {});
-        const message = await channel.fetchMessage(doc.messageId);
-        if (!message)
-          return db.deleteOne({ _id: doc._id }, (err, result) => {});
-        giveawayEnd(bot, message, doc.end, {
-          reward: doc.reward,
-          winnerCount: doc.winnerCount
-        });
-      });
-    });
-  });
-}
 
 // Set commands
 set(bot);
@@ -115,12 +94,6 @@ bot.on("message", message => {
   });
 });
 
-// Giveaway
-bot.on("ready", () => {
-  if (!bot.db) dbEmitter.on("open", () => giveaway());
-  else giveaway();
-});
-
 bot.on("ready", () => {
   bot.guilds.map(guild =>
     console.log(
@@ -128,63 +101,19 @@ bot.on("ready", () => {
     )
   );
 });
-bot.on("guildCreate", guild => {
-  if (!bannedServers) {
-    let channel = bot.channels.get(
-      guild.channels
-        .filter(
-          c =>
-            c.permissionsFor(bot.user).has("SEND_MESSAGES") && c.type === "text"
-        )
-        .map(r => r.id)[0]
-    );
+bot.on('guildCreate', (guild) => {
 
-    channel.send(
-      `Thank you for inviting Series! We are happy to serve your server with all our will and possiblities! Commands list: \`!help\` \n Need help with the bot? Join our server: https://discord.gg/wen9SQC `
-    );
-  }
-  if (bannedServers) {
-    let channel = bot.channels.get(
-      guild.channels
-        .filter(
-          c =>
-            c.permissionsFor(bot.user).has("SEND_MESSAGES") && c.type === "text"
-        )
-        .map(r => r.id)[0]
-    );
-    channel.send(
-      "Sorry, Our services were temporary suspended in your server. Please contact Series Service Provider"
-    );
-    guild.leave();
-  }
-});
+   
+       let channel = bot.channels.get(guild.channels.filter(c => c.permissionsFor(bot.user).has("SEND_MESSAGES") && c.type === "text").map(r => r.id)[0]) 
+        
+       channel.send(`Thank you for choosing **Series** \n To run my commands do: \`!help\` \n Support Server: https://discord.gg/57VTHwF`)
 
-bot.on("guildMemberAdd", member => {
-  let userLogs = member.guild.channels.find(c => c.name === "📜》servergates");
-
-  if (userLogs) {
-    // anthony#8577
-    userLogs.send(
-      `<:memberjoin:623491001662832641> User joined! \n **${member.user.tag}** (\`${member.user.id}\`) has joined!`
-    );
-  }
-});
-
-bot.on("guildMemberRemove", member => {
-  let userLogs = member.guild.channels.find(c => c.name === "📜》servergates");
-
-  if (userLogs) {
-    // anthony#8577
-    userLogs.send(
-      `<:memberleave:623491013859606558> User left! \n  **${member.user.tag}** (\`${member.user.id}\`)has left!`
-    );
-  }
 });
 const serverStats = {
-  guildID: "614904662575022083",
-  totalUserID: "621922381937508381",
-  memberCountID: "621922465773256741",
-  botCountID: "621922556743647242"
+  guildID: "",
+  totalUserID: "",
+  memberCountID: "",
+  botCountID: ""
 };
 bot.on("guildMemberAdd", member => {
   if (member.guild.id !== serverStats.guildID) return;

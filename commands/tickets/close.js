@@ -41,7 +41,7 @@ run : async (bot, message, args) => {
     
     let sChannel = message.guild.channels.find(c => c.name === "ticketlogs")
     
-    if(["application", "ticket", "claimed", "accepted", "denied"].some((x) => channelname.startsWith(x))){
+    if(["application", "ticket"].some((x) => channelname.startsWith(x))){
         sChannel.send(sembed)//writes at the end of the file who closed the ticket
         message.channel.delete()
     }

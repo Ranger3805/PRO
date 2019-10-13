@@ -74,6 +74,8 @@ module.exports = {
         if (err) return console.error(err); // Todo: Remove console.error if logging is not needed
         // Todo: Add action on successful document saving if needed..
         success(message, user, reason);
+        
+        
       });
     });
   }

@@ -10,8 +10,8 @@ module.exports = {
     },
     run: async (bot, message, args) => {
  if(message.author.id == ownerid){
-   bot.destroy().then(_ => bot.login(token))
    message.channel.send("Restarting...").then(m => {
+   bot.destroy().then(_ => bot.login(token))
      m.edit(`Restarted!`)
    })    
  }
