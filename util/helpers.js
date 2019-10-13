@@ -7,51 +7,6 @@ function nextLvlXp(lvl) {
   return 100 + (50 + lvl * 5) * lvl;
 }
 
-function giveawayEnd(bot, message, end, options = {}) {
-  setTimeout(() => {
-    const winners = [];
-
-    const { winnerCount, reward } = options;
-
-    const users = message.reactions
-      .get("🎉")
-      .users.array()
-      .filter(e => e.id !== bot.user.id);
-
-    if (users.length < 1) {
-      return message.channel.send("No one has won so the bot wins.");
-    }
-
-    if (users.length < winnerCount) {
-      return message.channel.send(
-        "There are too few people who participated, so the bot won."
-      );
-    }
-
-    for (let i = 0; i < winnerCount; i++) {
-      const winnerIndex = Math.floor(Math.random() * users.length);
-      const winner = users.splice(winnerIndex, 1)[0];
-      winners.push(winner);
-    }
-
-    winners.forEach(winner =>
-      message.channel.send(`Congratulations ${winner}! You have won ${reward}`)
-    );
-
-    bot.db
-      .collection("giveaways")
-      .findOne(
-        { messageId: message.id, channelId: message.channel.id },
-        (err, doc) => {
-          if (err) console.error(err);
-          if (doc) {
-            bot.db.collection("giveaways").deleteOne({ _id: doc._id });
-          }
-        }
-      );
-  }, end - Date.now());
-}
-
 function set(bot) {
   function channelCommand(message, val, doc) {
     if (!val) val = message.channel.id;
@@ -109,7 +64,7 @@ function set(bot) {
       }
     },
     {
-      name: "moderationchannel",
+      name: "modchannel",
       aliases: [],
       async run(message, val, doc) {
         if (!message.channel) return;
@@ -119,24 +74,15 @@ function set(bot) {
       }
     },
     {
-      name: "messagelogsedit",
+      name: "verificationlogs",
       aliases: [],
       async run(message, val, doc) {
         if (!message.channel) return;
         val = channelCommand(message, val, doc);
-        doc.messageLogsEditChannelId = val;
+        doc.verificationChannelId = val;
         return [doc, `<#${val}>`];
-      }
-    },
-    {
-      name: "messagelogsdelete",
-      aliases: [],
-      async run(message, val, doc) {
-        if (!message.channel) return;
-        val = channelCommand(message, val, doc);
-        doc.messageLogsDeleteChannelId = val;
-        return [doc, `<#${val}>`];
-      }
+      
+    }
     },
     {
       name: "announcementschannel",
@@ -199,15 +145,6 @@ function set(bot) {
       }
     },
     {
-      name: "swearprotection",
-      aliases: [],
-      async run(message, val, doc) {
-        val = valToBool(message, val, doc);
-        doc.swearProtection = val;
-        return [doc, String(val)];
-      }
-    },
-    {
       name: "capsprotection",
       aliases: [],
       async run(message, val, doc) {
@@ -222,24 +159,6 @@ function set(bot) {
       async run(message, val, doc) {
         val = valToBool(message, val, doc);
         doc.spamProtection = val;
-        return [doc, String(val)];
-      }
-    },
-    {
-      name: "linkprotection",
-      aliases: [],
-      async run(message, val, doc) {
-        val = valToBool(message, val, doc);
-        doc.linkProtection = val;
-        return [doc, String(val)];
-      }
-    },
-    {
-      name: "linkbypass",
-      aliases: [],
-      async run(message, val, doc) {
-        val = valToBool(message, val, doc);
-        doc.linkBypass = val;
         return [doc, String(val)];
       }
     }
@@ -314,4 +233,4 @@ function set(bot) {
   });
 }
 
-module.exports = { nextLvlXp, giveawayEnd, set };
+module.exports = { nextLvlXp, set };

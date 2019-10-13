@@ -33,7 +33,6 @@ module.exports = {
   run(bot, message, args) {
     if (!message.guild) return;
     if (!message.member) return;
-    if (!message.member.permissions.has('MANAGE_GUILD')) return;
 
     const embed = new RichEmbed(); // Embed could be edited using this line
 

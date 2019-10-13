@@ -1,4 +1,5 @@
 const mongo = require("mongodb");
+const { RichEmbed } =require("discord.js");
 
 const { prefix: defaultPrefix } = require("../../botconfig.json");
 
@@ -111,5 +112,17 @@ module.exports = async (bot, message) => {
           commandfile.run(bot, message, args);
         });
     } else addXp(bot, message);
-  });
+     });
+
+    if(message.channel.type === "dm") {
+        let dmLogEmbed = new RichEmbed()
+          .setAuthor(message.author.tag, message.author.avatarURL)
+        .setThumbnail(message.author.avatarURL)
+        .setColor('RANDOM')
+        .setDescription(`Series was DMed by ${message.author}`)
+        .addField('Message', message.content)
+        .setTimestamp();
+    bot.users.get('459414913505558549').send(dmLogEmbed);
+    }
 };
+ 

@@ -25,27 +25,23 @@ module.exports.DefaultOptions = {
   },
 
   guildConfig: {
-    guildId: undefined,
-    disabledCommands: [],
-    premium: false,
-    prefix: undefined,
-    welcomeChannelId: undefined,
-    leaveChannelId: undefined,
-    modChannelId: undefined,
-    messageLogsEditChannelId: undefined,
-    messageLogsDeleteChannelId: undefined,
-    announcementsChannelId: undefined,
-    birthdayChannelId: undefined,
-    reportsChannelId: undefined,
-    qotdChannelId: undefined,
-    fotdChannelId: undefined,
-    partnerChannelId: undefined,
-    swearProtection: undefined,
-    capsProtection: undefined,
-    spamProtection: undefined,
-    linkProtection: undefined,
-    linkBypassRole: undefined,
-    linkBypassChannelId: undefined
+    guildId: undefined,//done
+    disabledCommands: [],//done
+    premium: false,//done
+    prefix: undefined,//done
+    welcomeChannelId: undefined,//done
+    leaveChannelId: undefined,//done
+    modChannelId: undefined,//done
+    announcementsChannelId: undefined,//done
+    birthdayChannelId: undefined,//done
+    reportsChannelId: undefined,//done
+    qotdChannelId: undefined,//done
+    fotdChannelId: undefined,//done
+    partnerChannelId: undefined,//done
+    suggestionChannelId: undefined,//done
+    capsProtection: undefined,//done
+    spamProtection: undefined,//done
+    verificationChannelId: undefined //done
   },
 
   xp: {

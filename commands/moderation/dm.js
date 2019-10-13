@@ -9,12 +9,11 @@ module.exports = {
         aliases: ["directmessage"]
     },
   run: async (bot, message, args) => {
-var mention = message.mentions.users.first();
-
-if (mention == null) { return; }
-if (!mention == null) return message.channel.send('User not found!')
-  let rreason = args.join(" ").slice(22);
-  mention.send (`**You have been dmed by || ${message.author} || in the server named: ⭐| ${message.guild.name}** \n The message: ${rreason}`);
-  message.channel.send("<:yes:625682407722450947>| User has been direct messaged!")
+    const toDm = message.mentions.users.first();
+    if(!toDm) return message.reply("Couldn't find that user!");
+    const text = args.slice(1).join(" ");
+    if(!text) return message.reply("What yo want to dm him ?");
+    toDm.send(`You have been dmed by ${message.author} in ${message.guild} \n Message: ${text}`).catch(() => message.reply("Sowwy, he got his dms blocked \:("))
+  }
 }
-}
+ 

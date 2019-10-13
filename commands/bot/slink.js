@@ -19,7 +19,7 @@ module.exports = {
 
       let botEmbed = new RichEmbed()
       .setTitle("😊| Server Link!")
-      .setURL("https://discord.gg/wen9SQC")
+      .setURL("https://discord.gg/57VTHwF")
       .setColor(cyan);
 
       message.channel.send(botEmbed);

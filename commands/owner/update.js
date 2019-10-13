@@ -11,7 +11,7 @@ module.exports = {
     },
     run: async (bot, message, args) => {
 
-    if(message.author.id != "629576656079814677") return message.channel.send("You're not the bot the owner!")
+    if(message.author.id != "459414913505558549") return message.channel.send("You're not the bot the owner!")
 
       const sayMessage = args.join(" ");
       message.delete().catch();

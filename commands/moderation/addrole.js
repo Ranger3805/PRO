@@ -1,6 +1,6 @@
 const { RichEmbed } = require("discord.js")
 const { redlight } = require("../../colours.json")
-
+const Constants = require("../../util/Constants");
 module.exports= {
     config: {
         name: "addrole",
@@ -30,6 +30,16 @@ module.exports= {
         await rMember.addRole(role.id).catch(e => console.log(e.message))
         message.channel.send(`The role, ${role.name}, has been added to ${rMember.displayName}.`)
     }
+          const db = bot.db
+      .collection("guildConfig")
+      .findOne({ guildId: message.guild.id }, (err, doc) => {
+        if (err) console.error(err);
+        if (!doc) doc = Constants.DefaultOptions.guildConfig;
+        
+        const chId = doc.modChannelId;
+        if (!chId) return;
+        const ch = bot.channels.get(chId);
+        if (!ch) return;
 
     let embed = new RichEmbed()
     .setColor(redlight)
@@ -40,7 +50,7 @@ module.exports= {
     .addField("Reason:", reason)
     .addField("Date:", message.createdAt.toLocaleString())
 
-        let sChannel = message.guild.channels.find(c => c.name === "modlogs")
-        sChannel.send(embed)
-    }
+        ch.send(embed)
+    })
+          }
 }

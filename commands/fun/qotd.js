@@ -21,10 +21,17 @@ module.exports = {
       .setColor(gold)
       .addField("Message:", `${sayMessage}`);
 
-      let announcementschannel = message.guild.channels.find(`name`, "❓》qotd");
-      if(!announcementschannel) return message.channel.send("Couldn't find the channel!")
-
-
-      announcementschannel.send(botEmbed);
-   }
+          const db = bot.db
+      .collection("guildConfig")
+      .findOne({ guildId: message.guild.id }, (err, doc) => {
+        if (err) console.error(err);
+        if (!doc) doc = Constants.DefaultOptions.guildConfig;
+        
+        const chId = doc.qotdChannelId;
+        if (!chId) return;
+        const ch = bot.channels.get(chId);
+        if (!ch) return;
+      ch.send(botEmbed);
+   })
+          }
  }

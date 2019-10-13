@@ -1,5 +1,6 @@
 const { RichEmbed } = require("discord.js")
 const { redlight } = require("../../colours.json");
+const Constants = require("../../util/Constants");
 
 module.exports = {
     config: {
@@ -32,17 +33,27 @@ module.exports = {
         console.log(e.message)
     }
 
+    const db = bot.db
+      .collection("guildConfig")
+      .findOne({ guildId: message.guild.id }, (err, doc) => {
+        if (err) console.error(err);
+        if (!doc) doc = Constants.DefaultOptions.guildConfig;
+        
+        const chId = doc.modChannelId;
+        if (!chId) return;
+        const ch = bot.channels.get(chId);
+        if (!ch) return;
+
     let embed = new RichEmbed()
     .setColor(redlight)
     .setAuthor(`${message.guild.name} Modlogs`, message.guild.iconURL)
-    .addField("Moderation:", "unban")
-    .addField("Moderated on:", `${bannedMember.username} (${bannedMember.id})`)
+    .addField("Moderation:", "Addrole")
+    .addField("Action Applied to:", bannedMember.user.username)
     .addField("Moderator:", message.author.username)
     .addField("Reason:", reason)
     .addField("Date:", message.createdAt.toLocaleString())
 
-        let sChannel = message.guild.channels.find(c => c.name === "modlogs")
-        sChannel.send(embed)
-
-    }
+        ch.send(embed)
+    })
+          }
 }
