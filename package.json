@@ -35,7 +35,7 @@
     "express": "^4.16.4",
     "mongodb": "^3.3.2",
     "discord.js-minesweeper": "^1.0.5",
-    "mathjs": "^6.0.4"
+    "mathjs": "^7.5.1"
   },
   "engines": {
     "node": "^10.x"
